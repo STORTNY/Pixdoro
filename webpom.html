@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" type="text/css" href="csspom.css">
+ 
+
+
+</head>
+<body>
+        
+    <h1>Pomodoro Timer</h1>
+    <p>
+
+        <label>Enter study time in minutes: </label>
+        <input type="number" id="studytime">
+        <br><br>
+        <label>Enter rest time in minutes: </label>
+        <input type="number" id="resttime">
+        <br><br>
+        <button onclick="startPomodoro()" id="startBtn">Start</button>
+        <button onclick="cancelTimer()" id="cancelBtn" style="display: none;">Cancel</button>
+        <div id="timerDisplay"></div>
+    </p>
+
+
+    <script>
+        var interval;
+        var startBtn = document.getElementById('startBtn');
+        var cancelBtn = document.getElementById('cancelBtn');
+
+        function pomodoro(studytime, resttime) {
+            cancelBtn.style.display = 'inline';
+            startBtn.disabled = true;
+
+            var studySeconds = studytime * 60;
+            var restSeconds = resttime * 60;
+
+            countdown(studySeconds, "Study").then(function() {
+                return countdown(restSeconds, "Rest");
+            });
+        }
+
+        function countdown(t, rs) {
+            return new Promise(function(resolve) {
+                interval = setInterval(function() {
+                    if (t <= 0 || isNaN(t)) {
+                        clearInterval(interval);
+                        resolve();
+                    } else {
+                        var min = Math.floor(t / 60);
+                        var sec = t % 60;
+                        document.getElementById('timerDisplay').innerText = rs + " time left: " + min.toString().padStart(2, '0') + ":" + sec.toString().padStart(2, '0');
+                        t--;
+                    }
+                }, 1000);
+            });
+        }
+
+        function startPomodoro() {
+            var studytime = parseInt(document.getElementById('studytime').value);
+            var resttime = parseInt(document.getElementById('resttime').value);
+
+            if (isNaN(studytime) || isNaN(resttime)) {
+                alert("Please enter valid numbers for study and rest times.");
+            } else {
+                pomodoro(studytime, resttime);
+            }
+        }
+
+        function cancelTimer() {
+            clearInterval(interval);
+            document.getElementById('timerDisplay').innerText = '';
+            cancelBtn.style.display = 'none';
+            startBtn.disabled = false;
+        }
+
+
+    </script>
+
+
+</body>
+</html>
