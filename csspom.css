@@ -9,7 +9,8 @@ body {
     background-color: palevioletred;
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('2nd.jpg'); 
+    background-image: url('background/bg.jpg'); 
+
     background-size: cover; 
     background-position: center; 
 }
