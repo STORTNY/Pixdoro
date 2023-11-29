@@ -60,4 +60,16 @@ div{
     font-size:x-large
     
 }
-    
+
+
+@media only screen and (max-width: 600px) {
+    body {
+        height: 100vh;
+    }
+
+    h1,
+    p,
+    div {
+        font-size: medium; 
+    }
+}
