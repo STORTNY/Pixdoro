@@ -58,35 +58,37 @@
                 });
             }
     
-            function startPomodoro() {
-                var studytime = parseInt(document.getElementById('studytime').value);
-                var resttime = parseInt(document.getElementById('resttime').value);
-
-
-                var studytime = parseInt(studytimeInput.value);
-                var resttime = parseInt(resttimeInput.value);
-                            
-    
-                if (isNaN(studytime) || isNaN(resttime)) || studytime < 0 || resttime < 0) {
-                    alert("Please enter valid numbers for study and rest times.");
-                    return;
-                }
-            
+                function startPomodoro() {
+                    var studytimeInput = document.getElementById('studytime');
+                    var resttimeInput = document.getElementById('resttime');
                 
-                if (studytime >= 60) {
-                    var studyHours = Math.floor(studytime / 60);
-                    var studyMinutes = studytime % 60;
-                    studytimeInput.value = studyHours + "h " + studyMinutes + "m";
-                }
-            
-                if (resttime >= 60) {
-                    var restHours = Math.floor(resttime / 60);
-                    var restMinutes = resttime % 60;
-                    resttimeInput.value = restHours + "h " + restMinutes + "m";
-                }
-            
-                pomodoro(studytime, resttime);
+                    var studytime = parseInt(studytimeInput.value);
+                    var resttime = parseInt(resttimeInput.value);
+                
+                    // Check for negative numbers
+                    if (isNaN(studytime) || isNaN(resttime) || studytime < 0 || resttime < 0) {
+                        alert("Please enter valid non-negative numbers for study and rest times.");
+                        studytimeInput.value = ''; // Clear invalid input
+                        resttimeInput.value = ''; // Clear invalid input
+                        return;
+                    }
+                
+                    // Convert values greater than 60 to hours and minutes
+                    if (studytime >= 60) {
+                        var studyHours = Math.floor(studytime / 60);
+                        var studyMinutes = studytime % 60;
+                        studytimeInput.value = studyHours + "h " + studyMinutes + "m";
+                    }
+                
+                    if (resttime >= 60) {
+                        var restHours = Math.floor(resttime / 60);
+                        var restMinutes = resttime % 60;
+                        resttimeInput.value = restHours + "h " + restMinutes + "m";
+                    }
+                
+                    pomodoro(studytime, resttime);
             }
+
             }
     
             function cancelTimer() {
