@@ -87,20 +87,17 @@
                     }
                 
                     pomodoro(studytime, resttime);
-            }
-
-            }
+                }
     
-            function cancelTimer() {
-                clearInterval(interval);
-                document.getElementById('timerDisplay').innerText = '';
-                cancelBtn.style.display = 'none';
-                startBtn.disabled = false;
-            }
-            
-         });
+                function cancelTimer() {
+                    clearInterval(interval);
+                    document.getElementById('timerDisplay').innerText = '';
+                    cancelBtn.style.display = 'none';
+                    startBtn.disabled = false;
+                }  
+             });
 
-    </script>
+     </script>
 
 
 </body>
