@@ -79,6 +79,8 @@
 
         function cancelTimer() {
             clearInterval(interval);
+            document.getElementById('studytime').value = '';
+            document.getElementById('resttime').value = '';
             document.getElementById('timerDisplay').innerText = '';
             cancelBtn.style.display = 'none';
             startBtn.disabled = false;
