@@ -53,6 +53,7 @@ p{
 }
 
 div{
+    border-radius: 8px;
     color: #8d2828;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: pink ;
