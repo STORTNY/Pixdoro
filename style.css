@@ -59,3 +59,5 @@ div{
     font-size:x-large
     
 }
+@media only screen and (max-width: 600px) {
+}
