@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Pomodoro Timer</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="csspom.css">
+ 
 
 
 </head>
@@ -25,68 +25,66 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var interval;
-            var startBtn = document.getElementById('startBtn');
-            var cancelBtn = document.getElementById('cancelBtn');
-    
-            function pomodoro(studytime, resttime) {
-                cancelBtn.style.display = 'inline';
-                startBtn.disabled = true;
-    
-                var studySeconds = studytime * 60;
-                var restSeconds = resttime * 60;
-    
-                countdown(studySeconds, "Study").then(function() {
-                    return countdown(restSeconds, "Rest");
-                });
-            }
-    #
-         
-            function countdown(t, rs) {
-                return new Promise(function(resolve) {
-                    interval = setInterval(function() {
-                        if (t <= 0 || isNaN(t)) {
-                            clearInterval(interval);
-                            resolve();
-                        } else {
-                            var hours = Math.floor(t / 3600);
-                            var min = Math.floor((t % 3600) / 60);
-                            var sec = t % 60;
-                            
-                            var displayTime = rs + " time left: " + hours.toString().padStart(2, '0') + ":" +
-                                            min.toString().padStart(2, '0') + ":" +
-                                            sec.toString().padStart(2, '0');
-                            document.getElementById('timerDisplay').innerText = displayTime;
-                            t--;
-                        }
-                    }, 1000);
-                });
-            }
-    
-            function startPomodoro() {
-                var studytime = parseInt(document.getElementById('studytime').value);
-                var resttime = parseInt(document.getElementById('resttime').value);
-    
-                if (isNaN(studytime) || isNaN(resttime) || studytime < 0 || resttime <0 ) {
-                    alert("Please enter valid numbers for study and rest times.");
-                    document.getElementById('studytime').value = '';
-                    document.getElementById('resttime').value = '';
-    
-                } else {
-                    pomodoro(studytime, resttime);
-                }
-            }
-    
-                function cancelTimer() {
-                    clearInterval(interval);
-                    document.getElementById('timerDisplay').innerText = '';
-                    cancelBtn.style.display = 'none';
-                    startBtn.disabled = false;
-                }  
-             });
+        var interval;
+        var startBtn = document.getElementById('startBtn');
+        var cancelBtn = document.getElementById('cancelBtn');
 
-     </script>
+        function pomodoro(studytime, resttime) {
+            cancelBtn.style.display = 'inline';
+            startBtn.disabled = true;
+
+            var studySeconds = studytime * 60;
+            var restSeconds = resttime * 60;
+
+            countdown(studySeconds, "Study").then(function() {
+                return countdown(restSeconds, "Rest");
+            });
+        }
+
+        function countdown(t, rs) {
+            return new Promise(function(resolve) {
+                interval = setInterval(function() {
+                    if (t <= 0 || isNaN(t)) {
+                        clearInterval(interval);
+                        resolve();
+                    } else {
+                        var hours = Math.floor(t / 3600);
+                        var min = Math.floor((t % 3600) / 60);
+                        var sec = t % 60;
+                        
+                        var displayTime = rs + " time left: " + hours.toString().padStart(2, '0') + ":" +
+                                        min.toString().padStart(2, '0') + ":" +
+                                        sec.toString().padStart(2, '0');
+                        document.getElementById('timerDisplay').innerText = displayTime;
+                        t--;
+                    }
+                }, 1000);
+            });
+        }
+
+        function startPomodoro() {
+            var studytime = parseInt(document.getElementById('studytime').value);
+            var resttime = parseInt(document.getElementById('resttime').value);
+
+            if (isNaN(studytime) || isNaN(resttime) || studytime < 0 || resttime <0 ) {
+                alert("Please enter valid numbers for study and rest times.");
+                document.getElementById('studytime').value = '';
+                document.getElementById('resttime').value = '';
+
+            } else {
+                pomodoro(studytime, resttime);
+            }
+        }
+
+        function cancelTimer() {
+            clearInterval(interval);
+            document.getElementById('timerDisplay').innerText = '';
+            cancelBtn.style.display = 'none';
+            startBtn.disabled = false;
+        }
+
+
+    </script>
 
 
 </body>
