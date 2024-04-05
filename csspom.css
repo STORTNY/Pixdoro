@@ -79,6 +79,10 @@ div{
 
     
 input{
-    margin-left: 0%;
+    margin: auto;
+    padding: 12px 24px 12px 12px;
+    background-color: rgb(236, 177, 214);
+    border-radius: 8px;
+    width: 40%;
 }
 
