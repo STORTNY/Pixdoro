@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixadoro</title>
     <link rel="stylesheet" type="text/css" href="csspom.css">
-    
+
  
 
 
@@ -107,7 +107,7 @@
             function startPomodoro() {
                 var studytime = parseInt(document.getElementById('studytime').value);
                 var resttime = parseInt(document.getElementById('resttime').value);
-                var repeat = parseInt(document.getElementById('repeat').value); // Update repeat globally
+                repeat = parseInt(document.getElementById('repeat').value); 
 
                 if (isNaN(studytime) || isNaN(resttime) || isNaN(repeat) || studytime < 0 || resttime < 0 || repeat < 0 || isNaN(repeat)) {
                     alert("Please enter valid numbers for study and rest times, and repeat count.");
