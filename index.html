@@ -3,144 +3,137 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixadoro</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="csspom.css">
+    
  
 
 
 </head>
 <body>
         
-    <h1>Welcome to Pixadoro <3 !</h1>
-    <p>
-        <label for="studytime">Enter study time in minutes: </label>
-        <br><br>
-        <input type="number" id="studytime">
-        <br><br>
-        <label for="resttime">Enter rest time in minutes:   </label>
-        <br><br>
-        <input type="number" id="resttime">
-        <br><br>
-        <label for="repeat">Repeat for: </label>
-        <br><br>
-        <input type="number" id="repeat">
-        <br><br>
-        <button onclick="startPomodoro()" id="startBtn">Start</button>
-        <button onclick="cancelTimer()" id="cancelBtn" style="display: none;">Cancel</button>
-        <div id="timerDisplay"></div>
-    </p>
+    <h1>Welcome to Pixodoro <3 ! </h1>
+        <p>
+            <label for="studytime">Enter study time in minutes: </label>
+            <br><br>
+            <input type="number" id="studytime">
+            <br><br>
+            <label for="resttime">Enter rest time in minutes:   </label>
+            <br><br>
+            <input type="number" id="resttime">
+            <br><br>
+            <label for="repeat">Repeat for: </label>
+            <br><br>
+            <input type="number" id="repeat">
+            <br><br>
+            <button onclick="startPomodoro()" id="startBtn">Start</button>
+            <button onclick="cancelTimer()" id="cancelBtn" style="display: none;">Cancel</button>
+            <div id="timerDisplay"></div>
+        </p>
+
+        <script>
+            var repeat = 0;
+            var interval;
+            var startBtn = document.getElementById('startBtn');
+            var cancelBtn = document.getElementById('cancelBtn');
 
 
+            function pomodoro(studytime, resttime) {
+                cancelBtn.style.display = 'inline';
+                startBtn.disabled = true;
 
-    <script>
-        var interval;
-        var repeat = 0;
-        var startBtn = document.getElementById('startBtn');
-        var cancelBtn = document.getElementById('cancelBtn');
+                var studySeconds = studytime * 60;
+                var restSeconds = resttime * 60;
 
-        function pomodoro(studytime, resttime) {
-            cancelBtn.style.display = 'inline';
-            startBtn.disabled = true;
-
-            var studySeconds = studytime * 60;
-            var restSeconds = resttime * 60;
-
-            if (repeat > 0) {
-                repeat--;
-                countdown(studySeconds, "Study").then(function() {
-                    return countdown(restSeconds, "Rest").then(function() {
-                        pomodoro(studytime, resttime);
+                if (repeat > 0) {
+                    repeat--;
+                    countdown(studySeconds, "Study").then(function() {
+                        return countdown(restSeconds, "Rest").then(function() {
+                            pomodoro(studytime, resttime);
+                        });
                     });
-                });
-            } else {
-                endCycle();
+                } else {
+                    endCycle();
+                }
             }
-        }
-
-        function countdown(t, rs) {
-            return new Promise(function(resolve) {
-                interval = setInterval(function() {
-                    if (t <= 0 || isNaN(t)) {
-                        clearInterval(interval);
-                        var audio = new Audio('sounds/notification1.wav'); 
-                        audio.play();
-                        resolve();
-                    } else {
-                        var hours = Math.floor(t / 3600);
-                        var min = Math.floor((t % 3600) / 60);
-                        var sec = t % 60;
-                        
-                        var displayTime = rs + " time left: " + hours.toString().padStart(2, '0') + ":" +
-                                        min.toString().padStart(2, '0') + ":" +
-                                        sec.toString().padStart(2, '0') + '\n' +
-                                        ' Cycles left:' +repeat.toString();
-                        document.getElementById('timerDisplay').innerText = displayTime;
-                        t--;
-                    }
-                }, 1000);
-            });
-        }
 
 
-        function endCycle() {
-            resetValues();
-            var audio = new Audio('sounds/done.wav');
-            audio.play();
-            setTimeout(function() {
-                audio.pause();
-            }, 30000);
-            cancelTimer();
-        }
 
-        
+            function countdown(t, rs) {
+                return new Promise(function(resolve) {
+                    interval = setInterval(function() {
+                        if (t <= 0 || isNaN(t)) {
+                            clearInterval(interval);
+                            var audio = new Audio('sounds/notification1.wav'); 
+                            audio.play();
+                            resolve();
+                        } else {
+                            var hours = Math.floor(t / 3600);
+                            var min = Math.floor((t % 3600) / 60);
+                            var sec = t % 60;
 
-        function startPomodoro() {
-            var studytime = parseInt(document.getElementById('studytime').value);
-            var resttime = parseInt(document.getElementById('resttime').value);
-            var repeat = parseInt(document.getElementById('repeat').value); // Update repeat globally
+                            var displayTime = rs + " time left: " + hours.toString().padStart(2, '0') + ":" +
+                                            min.toString().padStart(2, '0') + ":" +
+                                            sec.toString().padStart(2, '0') + '\n' +
+                                            ' Cycles left:' +repeat.toString();
+                            document.getElementById('timerDisplay').innerText = displayTime;
+                            t--;
+                        }
+                    }, 1000);
+                });
+            }
 
-            if (isNaN(studytime) || isNaN(resttime) || studytime < 0 || resttime <0 || repeat < 0 || isNaN(repeat)) {
-                alert("Please enter valid numbers for study and rest times.");
+            function endCycle() {
+                resetValues();
+                var audio = new Audio('sounds/done.wav');
+                audio.play();
+                setTimeout(function() {
+                    audio.pause();
+                }, 30000);
+                cancelTimer();
+            }
+
+            function resetValues() {
+                clearInterval(interval);
                 document.getElementById('studytime').value = '';
                 document.getElementById('resttime').value = '';
                 document.getElementById('repeat').value = '';
-                
-
-            } else {
-                pomodoro(studytime, resttime);
+                document.getElementById('timerDisplay').innerText = 'Great job! Cya next time .';
+                cancelBtn.style.display = 'none';
+                startBtn.disabled = false;
             }
-        }
 
-        function cancelTimer() {
-            clearInterval(interval);
-            document.getElementById('studytime').value = '';
-            document.getElementById('resttime').value = '';
-            document.getElementById('repeat').value = '';
-            document.getElementById('timerDisplay').innerText = '';
-            cancelBtn.style.display = 'none';
-            startBtn.disabled = false;
-        }
-        
-        function endCycle() {
-            resetValues();
-            var audio = new Audio('sounds/done.wav');
-            audio.play();
-            setTimeout(function() {
-                audio.pause();
-            }, 30000);
-            cancelTimer();
-        }
 
-        function resetValues() {
-            clearInterval(interval);
-            document.getElementById('studytime').value = '';
-            document.getElementById('resttime').value = '';
-            document.getElementById('repeat').value = '';
-            document.getElementById('timerDisplay').innerText = 'Great job! Cya next time .';
-            cancelBtn.style.display = 'none';
-            startBtn.disabled = false;
-        }
 
-    </script>
+            function startPomodoro() {
+                var studytime = parseInt(document.getElementById('studytime').value);
+                var resttime = parseInt(document.getElementById('resttime').value);
+                var repeat = parseInt(document.getElementById('repeat').value); // Update repeat globally
+
+                if (isNaN(studytime) || isNaN(resttime) || isNaN(repeat) || studytime < 0 || resttime < 0 || repeat < 0 || isNaN(repeat)) {
+                    alert("Please enter valid numbers for study and rest times, and repeat count.");
+                    document.getElementById('studytime').value = '';
+                    document.getElementById('resttime').value = '';
+                    document.getElementById('repeat').value = '';
+                } else {
+                    pomodoro(studytime, resttime);
+                }
+            }
+
+
+
+            function cancelTimer() {
+                clearInterval(interval);
+                document.getElementById('studytime').value = '';
+                document.getElementById('resttime').value = '';
+                document.getElementById('repeat').value = '';
+                document.getElementById('timerDisplay').innerText = '';
+                cancelBtn.style.display = 'none';
+                startBtn.disabled = false;
+            }
+
+
+
+        </script>
 
 
 </body>
