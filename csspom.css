@@ -1,8 +1,8 @@
 
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
     .form-container {
-        width: 90%; 
+        width: 80%; 
     }
 }
 
