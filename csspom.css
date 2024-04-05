@@ -1,8 +1,7 @@
 
-
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .form-container {
-        width: 80%; 
+        width: 90%; 
     }
 }
 
@@ -22,7 +21,7 @@ body {
 
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('bg.jpg'); 
+    background-image: url('background/bg.jpg'); 
     background-size: cover; 
     background-position: center; 
 }
