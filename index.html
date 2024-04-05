@@ -27,6 +27,7 @@
 
     <script>
         var interval;
+        var repeat = 0;
         var startBtn = document.getElementById('startBtn');
         var cancelBtn = document.getElementById('cancelBtn');
 
@@ -37,9 +38,16 @@
             var studySeconds = studytime * 60;
             var restSeconds = resttime * 60;
 
-            countdown(studySeconds, "Study").then(function() {
-                return countdown(restSeconds, "Rest");
-            });
+            if (repeat > 0) {
+                repeat--;
+                countdown(studySeconds, "Study").then(function() {
+                    return countdown(restSeconds, "Rest").then(function() {
+                        pomodoro(studytime, resttime);
+                    });
+                });
+            } else {
+                endCycle();
+            }
         }
 
         function countdown(t, rs) {
@@ -47,6 +55,8 @@
                 interval = setInterval(function() {
                     if (t <= 0 || isNaN(t)) {
                         clearInterval(interval);
+                        var audio = new Audio('sounds/notification1.wav'); 
+                        audio.play();
                         resolve();
                     } else {
                         var hours = Math.floor(t / 3600);
@@ -55,7 +65,8 @@
                         
                         var displayTime = rs + " time left: " + hours.toString().padStart(2, '0') + ":" +
                                         min.toString().padStart(2, '0') + ":" +
-                                        sec.toString().padStart(2, '0');
+                                        sec.toString().padStart(2, '0') + '\n' +
+                                        ' Cycles left:' +repeat.toString();
                         document.getElementById('timerDisplay').innerText = displayTime;
                         t--;
                     }
@@ -63,14 +74,30 @@
             });
         }
 
+
+        function endCycle() {
+            resetValues();
+            var audio = new Audio('sounds/done.wav');
+            audio.play();
+            setTimeout(function() {
+                audio.pause();
+            }, 30000);
+            cancelTimer();
+        }
+
+        
+
         function startPomodoro() {
             var studytime = parseInt(document.getElementById('studytime').value);
             var resttime = parseInt(document.getElementById('resttime').value);
+            var repeat = parseInt(document.getElementById('repeat').value); // Update repeat globally
 
-            if (isNaN(studytime) || isNaN(resttime) || studytime < 0 || resttime <0 ) {
+            if (isNaN(studytime) || isNaN(resttime) || studytime < 0 || resttime <0 || repeat < 0 || isNaN(repeat)) {
                 alert("Please enter valid numbers for study and rest times.");
                 document.getElementById('studytime').value = '';
                 document.getElementById('resttime').value = '';
+                document.getElementById('repeat').value = '';
+                
 
             } else {
                 pomodoro(studytime, resttime);
@@ -81,11 +108,31 @@
             clearInterval(interval);
             document.getElementById('studytime').value = '';
             document.getElementById('resttime').value = '';
+            document.getElementById('repeat').value = '';
             document.getElementById('timerDisplay').innerText = '';
             cancelBtn.style.display = 'none';
             startBtn.disabled = false;
         }
+        
+        function endCycle() {
+            resetValues();
+            var audio = new Audio('sounds/done.wav');
+            audio.play();
+            setTimeout(function() {
+                audio.pause();
+            }, 30000);
+            cancelTimer();
+        }
 
+        function resetValues() {
+            clearInterval(interval);
+            document.getElementById('studytime').value = '';
+            document.getElementById('resttime').value = '';
+            document.getElementById('repeat').value = '';
+            document.getElementById('timerDisplay').innerText = 'Great job! Cya next time .';
+            cancelBtn.style.display = 'none';
+            startBtn.disabled = false;
+        }
 
     </script>
 
