@@ -1,4 +1,14 @@
 
+
+@media (max-width: 768px) {
+    .form-container {
+        width: 90%; 
+    }
+}
+
+
+
+
 body {
     font-family: 'Brush Script MT', cursive;    display: flex;
     flex-direction: column;
@@ -6,10 +16,13 @@ body {
     align-items: center;
     height: 70vh;
     margin: 0;
-    background-color: palevioletred;
+    background-color: rgb(152, 112, 216);
+    border-radius: 8px;
+    padding: 12px 24px 12px 12px;
+
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('bg.jpg'); 
+    background-image: url('background/bg.jpg'); 
     background-size: cover; 
     background-position: center; 
 }
@@ -50,9 +63,12 @@ p{
     padding: 12px 24px 12px 12px;
     background-color: pink;
     border-radius: 8px;
+    width: 40%;
+    
 }
 
 div{
+    padding: 1%;
     border-radius: 8px;
     color: #8d2828;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -60,5 +76,9 @@ div{
     font-size:x-large
     
 }
-@media only screen and (max-width: 600px) {
+
+    
+input{
+    margin-left: 0%;
 }
+
