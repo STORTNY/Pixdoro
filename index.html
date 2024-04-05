@@ -12,17 +12,23 @@
         
     <h1>Welcome to Pixadoro <3 !</h1>
     <p>
-
-        <label>Enter study time in minutes: </label>
+        <label for="studytime">Enter study time in minutes: </label>
+        <br><br>
         <input type="number" id="studytime">
         <br><br>
-        <label>Enter rest time in minutes:   </label>
+        <label for="resttime">Enter rest time in minutes:   </label>
+        <br><br>
         <input type="number" id="resttime">
+        <br><br>
+        <label for="repeat">Repeat for: </label>
+        <br><br>
+        <input type="number" id="repeat">
         <br><br>
         <button onclick="startPomodoro()" id="startBtn">Start</button>
         <button onclick="cancelTimer()" id="cancelBtn" style="display: none;">Cancel</button>
         <div id="timerDisplay"></div>
     </p>
+
 
 
     <script>
