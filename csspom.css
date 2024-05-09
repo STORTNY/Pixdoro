@@ -9,6 +9,7 @@
 
 
 body {
+    background-image: url("bg.jpg");
     font-family: 'Brush Script MT', cursive;    display: flex;
     flex-direction: column;
     justify-content: center;
