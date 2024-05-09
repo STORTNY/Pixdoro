@@ -9,7 +9,6 @@
 
 
 body {
-    background-image: url("bg.jpg");
     font-family: 'Brush Script MT', cursive;    display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +21,7 @@ body {
 
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('background/bg.jpg'); 
+    background-image: url('bg.jpg'); 
     background-size: cover; 
     background-position: center; 
 }
